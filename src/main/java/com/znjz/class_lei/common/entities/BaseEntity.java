@@ -15,9 +15,9 @@ public class BaseEntity implements Serializable {
 	@TableId(value = "id", type = IdType.AUTO)
 	private Long id;
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime created;
+	private LocalDateTime gmtCreate;
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updated;
+	private LocalDateTime gmtModified;
 
 	private Integer statu;
 }
