@@ -1,9 +1,10 @@
 package com.znjz.class_lei.service.impl;
 
-import com.znjz.class_lei.entity.TblSign;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.znjz.class_lei.common.entities.TblSign;
 import com.znjz.class_lei.mapper.TblSignMapper;
 import com.znjz.class_lei.service.TblSignService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

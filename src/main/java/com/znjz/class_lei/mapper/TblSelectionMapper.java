@@ -1,6 +1,6 @@
 package com.znjz.class_lei.mapper;
 
-import com.znjz.class_lei.entity.TblSelection;
+import com.znjz.class_lei.common.entities.TblSelection;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

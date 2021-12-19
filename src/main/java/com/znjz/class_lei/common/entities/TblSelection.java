@@ -38,12 +38,5 @@ public class TblSelection extends BaseEntity {
      */
     private Long classId;
 
-    /**
-     * 新建时间
-     */
-    private LocalDateTime gmtCreate;
-
-    private LocalDateTime gmtModified;
-
 
 }

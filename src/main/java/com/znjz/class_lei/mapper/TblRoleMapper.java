@@ -1,6 +1,6 @@
 package com.znjz.class_lei.mapper;
 
-import com.znjz.class_lei.entity.TblRole;
+import com.znjz.class_lei.common.entities.TblRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

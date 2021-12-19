@@ -1,6 +1,6 @@
 package com.znjz.class_lei.mapper;
 
-import com.znjz.class_lei.entity.TblSign;
+import com.znjz.class_lei.common.entities.TblSign;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

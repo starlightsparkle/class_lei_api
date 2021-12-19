@@ -1,7 +1,8 @@
 package com.znjz.class_lei.mapper;
 
-import com.znjz.class_lei.entity.TblClass;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.znjz.class_lei.common.entities.TblClass;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**

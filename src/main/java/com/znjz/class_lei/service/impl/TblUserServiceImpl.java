@@ -1,9 +1,10 @@
 package com.znjz.class_lei.service.impl;
 
-import com.znjz.class_lei.entity.TblUser;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.TblUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

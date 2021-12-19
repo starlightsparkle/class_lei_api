@@ -1,9 +1,10 @@
 package com.znjz.class_lei.service.impl;
 
-import com.znjz.class_lei.entity.TblClass;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.mapper.TblClassMapper;
 import com.znjz.class_lei.service.TblClassService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

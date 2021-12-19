@@ -1,7 +1,8 @@
 package com.znjz.class_lei.service;
 
-import com.znjz.class_lei.entity.TblUser;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.znjz.class_lei.common.entities.TblUser;
 
 /**
  * <p>
