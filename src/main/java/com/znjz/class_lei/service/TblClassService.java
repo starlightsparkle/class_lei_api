@@ -3,6 +3,8 @@ package com.znjz.class_lei.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.znjz.class_lei.common.entities.TblClass;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -14,4 +16,8 @@ import com.znjz.class_lei.common.entities.TblClass;
  */
 public interface TblClassService extends IService<TblClass> {
     public int insertClass(TblClass tblClass);
+
+    public List<TblClass> listWithCreateByMe();
+
+
 }

@@ -54,7 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/sys/register/finishall",
             "/sys/register/clear",
             "/sys/register/email",
-            "/sys/register/report"
+            "/sys/register/report",
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/swagger-resources/configuration/ui",
+            "/swagge‌​r-ui.html" //swaager的配置资源
     };
     protected void configure(HttpSecurity http) throws Exception {
         //解决跨域问题，禁用csrf功能

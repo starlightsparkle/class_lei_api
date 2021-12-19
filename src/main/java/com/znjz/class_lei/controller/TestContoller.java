@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class TestContoller {
+public class TestContoller extends BaseController {
     @Autowired
     private TblClassService tblClassService;
     @Autowired
@@ -27,12 +27,12 @@ public class TestContoller {
 //                .setCreateId(1L);
 //        tblClassService.insertClass(tblClass);
 //
-        TblUser tblUser = new TblUser();
-        tblUser.setUsername("dddd");
-        tblUser.setPassword("111");
-        tblUser.setRoleId(1l);
-        tblUserService.save(tblUser);
-
+//        TblUser tblUser = new TblUser();
+//        tblUser.setUsername("dddd");
+//        tblUser.setPassword("111");
+//        tblUser.setRoleId(1l);
+//        tblUserService.save(tblUser);
+        System.out.println(current());
         return ResultBody.success();
     }
 }
