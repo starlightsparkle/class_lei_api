@@ -52,15 +52,7 @@ public class TblUser extends BaseEntity {
      */
     private Long roleId;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime gmtCreate;
 
-    /**
-     * 更改时间
-     */
-    private LocalDateTime gmtModified;
 
 
 }
