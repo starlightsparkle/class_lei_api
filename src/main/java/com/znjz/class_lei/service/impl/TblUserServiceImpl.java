@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.TblUserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,5 +26,13 @@ public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> impl
         wrapper.eq("username",username);
         TblUser tblUser=getOne(wrapper);
         return tblUser;
+    }
+
+    @Override
+    public TblUser getCurrentUser() {
+        //获取当前用户名
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //获取当前用户
+        return getByUsername(username);
     }
 }

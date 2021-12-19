@@ -14,4 +14,5 @@ import com.znjz.class_lei.common.entities.TblUser;
  */
 public interface TblUserService extends IService<TblUser> {
     TblUser getByUsername(String username);
+    TblUser getCurrentUser();
 }

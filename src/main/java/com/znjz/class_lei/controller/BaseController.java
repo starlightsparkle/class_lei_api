@@ -2,11 +2,17 @@ package com.znjz.class_lei.controller;
 
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.errorHandler.CommonEnum;
+import com.znjz.class_lei.service.TblUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class BaseController {
 
 
-
+    @Autowired
+    private TblUserService tblUserService;
 
     public ResultBody success(){
         return ResultBody.success(null);
@@ -53,7 +59,9 @@ public class BaseController {
     }
 
 
-
-
-
+    @GetMapping("/current")
+    public ResultBody current()
+    {
+     return ResultBody.success(tblUserService.getCurrentUser());
+    }
 }
