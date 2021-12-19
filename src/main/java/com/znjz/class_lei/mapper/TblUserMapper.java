@@ -2,6 +2,7 @@ package com.znjz.class_lei.mapper;
 
 import com.znjz.class_lei.entity.TblUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author znjz
  * @since 2021-12-18
  */
+@Mapper
 public interface TblUserMapper extends BaseMapper<TblUser> {
 
 }
