@@ -9,11 +9,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Wrapper;
 
@@ -41,10 +37,11 @@ public class TblClassController extends BaseController {
         return success(tblClassService.insertClass(tblClass));
     }
 
-    @ApiOperation(value="查询当前登陆用户建的课程", notes="应当不添加修改时间和创建时间")
+    @ApiOperation(value="获取我建的课程列表", notes="应当不添加修改时间和创建时间")
+    @GetMapping("/listByMe")
     public ResultBody listWithCreateByMe(){
 
-        return success(tblClassService.list());
+        return success(tblClassService.listWithCreateByMe());
     }
 
 

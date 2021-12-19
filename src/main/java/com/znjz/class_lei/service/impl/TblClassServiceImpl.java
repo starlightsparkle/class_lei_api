@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.mapper.TblClassMapper;
 import com.znjz.class_lei.service.TblClassService;
+import com.znjz.class_lei.service.TblUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ import java.util.Map;
 public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> implements TblClassService {
     @Autowired
     private TblClassMapper classMapper;
+    @Autowired
+    private TblUserService tblUserService;
 
     @Override
     public int insertClass(TblClass tblClass) {
@@ -35,12 +38,12 @@ public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> i
 
     @Override
     public List<TblClass> listWithCreateByMe() {
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("", "张雨琪");
-////        wrapper.select("class_id","class_name")
-//
-//        classMapper.selectList()
-        return null;
+        Map<String, Object> params = new HashMap<>();
+        QueryWrapper<TblClass> query = Wrappers.query();
+        query.eq("create_id", tblUserService.getCurrentUser().getUserId());
+        query.orderByDesc("gmt_created");
+        return list(query);
+
     }
 
 
