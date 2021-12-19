@@ -1,4 +1,4 @@
-package com.znjz.class_lei.entity;
+package com.znjz.class_lei.common.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -18,32 +18,22 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TblSelection extends BaseEntity {
+public class TblRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 选课id
+     * 角色id
      */
-    @TableId(value = "select_id", type = IdType.AUTO)
-    private Long selectId;
+    @TableId(value = "role_id", type = IdType.AUTO)
+    private Long roleId;
 
     /**
-     * 选课人id
+     * 角色名
      */
-    private Long userId;
+    private String roleName;
 
-    /**
-     * 课程id
-     */
-    private Long classId;
 
-    /**
-     * 新建时间
-     */
-    private LocalDateTime gmtCreate;
-
-    private LocalDateTime gmtModified;
 
 
 }

@@ -14,13 +14,13 @@ public class MybatisPlusHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info(".......start insert.......");
-        strictInsertFill(metaObject,"gmtCreate", LocalDateTime.class,LocalDateTime.now(ZoneOffset.of("+8")));
-        strictInsertFill(metaObject,"gmtModified", LocalDateTime.class,LocalDateTime.now(ZoneOffset.of("+8")));
+        strictInsertFill(metaObject,"gmt_create", LocalDateTime.class,LocalDateTime.now(ZoneOffset.of("+8")));
+        strictInsertFill(metaObject,"gmt_modified", LocalDateTime.class,LocalDateTime.now(ZoneOffset.of("+8")));
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info(".......start update.......");
-        strictUpdateFill(metaObject,"gmtModified", LocalDateTime.class,LocalDateTime.now(ZoneOffset.of("+8")));
+        strictUpdateFill(metaObject,"gmt_modified", LocalDateTime.class,LocalDateTime.now(ZoneOffset.of("+8")));
     }
 }

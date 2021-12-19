@@ -1,4 +1,4 @@
-package com.znjz.class_lei.entity;
+package com.znjz.class_lei.common.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

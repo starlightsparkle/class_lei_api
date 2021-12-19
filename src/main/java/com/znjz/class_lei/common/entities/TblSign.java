@@ -1,8 +1,9 @@
-package com.znjz.class_lei.entity;
+package com.znjz.class_lei.common.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
+
 import com.znjz.class_lei.common.entities.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,35 +18,38 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TblClass extends BaseEntity {
+public class TblSign extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 课堂id
+     * 签到id
      */
-    @TableId(value = "class_id", type = IdType.AUTO)
+    @TableId(value = "sign_id", type = IdType.AUTO)
+    private Long signId;
+
     private Long classId;
 
-    /**
-     * 创建人id
-     */
-    private Long createId;
+    private Long userId;
 
     /**
-     * 课程名
+     * 是否是教师的第一次签到
      */
-    private String className;
+    private Integer isTeacher;
 
     /**
-     * 新建时间
+     * 是gps签到还是普通签到 1为gps 0为二维码
      */
-    private LocalDateTime gmtCreate;
+    private Integer signType;
 
     /**
-     * 更改时间
+     * 每一节课每一次签到的标识
      */
-    private LocalDateTime gmtModified;
+    private Long classSignId;
 
+    /**
+     * gps签到
+     */
+    private String locationXy;
 
 }
