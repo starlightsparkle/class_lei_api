@@ -6,6 +6,7 @@ import com.znjz.class_lei.common.entities.ResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,6 +44,12 @@ public class GlobalExceptionHandler {
 	public ResultBody handler(RuntimeException e) {
 		log.error("运行时异常：----------------{}", e.getMessage());
 		return ResultBody.error(e.getMessage());
+	}
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(value = AccessDeniedException.class)
+	public ResultBody handler(AccessDeniedException e) {
+		log.error("无权限：----------------{}", e.getMessage());
+		return ResultBody.error("403", e.getMessage());
 	}
 
 }

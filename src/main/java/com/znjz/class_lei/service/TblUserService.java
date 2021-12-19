@@ -13,5 +13,5 @@ import com.znjz.class_lei.common.entities.TblUser;
  * @since 2021-12-18
  */
 public interface TblUserService extends IService<TblUser> {
-
+    TblUser getByUsername(String username);
 }

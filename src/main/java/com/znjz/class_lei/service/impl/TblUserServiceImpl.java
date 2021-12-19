@@ -1,6 +1,7 @@
 package com.znjz.class_lei.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.mapper.TblUserMapper;
@@ -18,4 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> implements TblUserService {
 
+    @Override
+    public TblUser getByUsername(String username) {
+        QueryWrapper<TblUser> wrapper=new QueryWrapper<>();
+        wrapper.eq("username",username);
+        TblUser tblUser=getOne(wrapper);
+        return tblUser;
+    }
 }

@@ -21,3 +21,8 @@ minio:
   secretKey: 12345678 #?????
 server:
   port: 8081
+sjj:
+  jwt:
+    header: Authorization
+    expire: 604800 #7天
+    secret: ji8n3439n439n43ld9ne9343fdfer49h
