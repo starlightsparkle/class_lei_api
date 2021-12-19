@@ -4,6 +4,7 @@ package com.znjz.class_lei.controller;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.service.TblClassService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author znjz
  * @since 2021-12-19
  */
+@Api(value = "ClassController|")
 @RestController
 @RequestMapping("/class")
 public class TblClassController extends BaseController {
@@ -32,6 +34,11 @@ public class TblClassController extends BaseController {
         tblClass.setCreateId(1L);
         return success(tblClassService.insertClass(tblClass));
     }
+
+
+
+
+
 
 
 

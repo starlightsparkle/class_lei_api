@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
 
 	@TableField(fill = FieldFill.INSERT)
-	private LocalDateTime gmtCreate;
+	private LocalDateTime gmtCreated;
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private LocalDateTime gmtModified;
 
