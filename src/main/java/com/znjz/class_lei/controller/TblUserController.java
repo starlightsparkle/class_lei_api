@@ -6,6 +6,7 @@ import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.service.TblUserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-12-18
  */
 @RestController
-@RequestMapping("/tbl/user")
+@RequestMapping("/user")
 @Api(value = "UserController|用户接口")
 public class TblUserController extends BaseController {
     @Autowired
@@ -30,5 +31,10 @@ public class TblUserController extends BaseController {
     public ResultBody register(TblUser tblUser)
     {
         return ResultBody.success(tblUserService.register(tblUser));
+    }
+    @GetMapping("/current")
+    public ResultBody getCurrent()
+    {
+        return ResultBody.success(tblUserService.getCurrentUser());
     }
 }
