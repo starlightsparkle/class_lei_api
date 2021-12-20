@@ -4,14 +4,15 @@ import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.mapper.TblUserMapper;
+import com.znjz.class_lei.service.QueueServer;
 import com.znjz.class_lei.service.TblClassService;
 import com.znjz.class_lei.service.TblUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("/text")
 public class TestContoller extends BaseController {
     @Autowired
     private TblClassService tblClassService;
@@ -19,20 +20,33 @@ public class TestContoller extends BaseController {
     private TblUserMapper tblUserMapper;
     @Autowired
     private TblUserService tblUserService;
+    @Autowired
+    private QueueServer queueServer;
+
+
     @GetMapping("/test")
     public ResultBody test()
     {
-//        TblClass tblClass=new TblClass();
-//        tblClass.setClassName("test")
-//                .setCreateId(1L);
-//        tblClassService.insertClass(tblClass);
-//
-//        TblUser tblUser = new TblUser();
-//        tblUser.setUsername("dddd");
-//        tblUser.setPassword("111");
-//        tblUser.setRoleId(1l);
-//        tblUserService.save(tblUser);
         System.out.println(current());
         return ResultBody.success();
     }
+
+    @PostMapping
+    public ResultBody sendCommonMess(@RequestParam String msg)
+    {
+        queueServer.sendCommonMessage(msg);
+        return ResultBody.success();
+    }
+
+
+    @PostMapping("/send")
+    public ResultBody sendCommonMess(String msg,String rky)
+    {
+        queueServer.sendMessage(msg,rky);
+        return ResultBody.success();
+    }
+
+
+
+
 }

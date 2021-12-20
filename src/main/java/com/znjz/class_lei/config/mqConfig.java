@@ -18,7 +18,7 @@ public class mqConfig {
     //队列
     public static final String CONFIRM_QUEUE_NAME = "app.class.common";
     //RoutingKey
-    public static final String CONFIRM_routing_key = "common";
+    public static final String CONFIRM_routing_key = "app.class.common";
 
     //声明交换机
     @Bean
