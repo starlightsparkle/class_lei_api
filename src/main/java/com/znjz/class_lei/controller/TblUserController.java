@@ -6,11 +6,7 @@ import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.service.TblUserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -28,7 +24,7 @@ public class TblUserController extends BaseController {
     @Autowired
     private TblUserService tblUserService;
     @PostMapping("/register")
-    public ResultBody register(TblUser tblUser)
+    public ResultBody register(@RequestBody TblUser tblUser)
     {
         return ResultBody.success(tblUserService.register(tblUser));
     }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.TblUserService;
+import com.znjz.class_lei.utils.RabbitUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,8 @@ public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> impl
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    RabbitUtils rabbitUtils;
     @Override
     public TblUser getByUsername(String username) {
         QueryWrapper<TblUser> wrapper=new QueryWrapper<>();
@@ -45,6 +48,9 @@ public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> impl
         //设置密码
         String password=passwordEncoder.encode(tblUser.getPassword());
         tblUser.setPassword(password);
-        return save(tblUser);
+        save(tblUser);
+        String queueName="app.user."+String.valueOf(tblUser.getUserId());
+        rabbitUtils.createOrBindQueue(queueName,"app.class.common");
+        return true;
     }
 }

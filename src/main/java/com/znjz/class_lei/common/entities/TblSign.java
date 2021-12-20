@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import com.znjz.class_lei.common.entities.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -18,6 +19,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class TblSign extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

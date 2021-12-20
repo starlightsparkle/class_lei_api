@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/configuration/ui",
             "/swagge‌​r-ui.html" //swaager的配置资源
             ,"/sendMessage/**",
-            "/tbl/user/register",
+            "/user/register",
             "/text/**"
 
     };

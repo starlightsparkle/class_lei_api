@@ -30,6 +30,9 @@ minio:
   secretKey: 12345678 #?????
 server:
   port: 8081
+  error:
+    include-message: always
+    include-exception: true
 sjj:
   jwt:
     header: Authorization

@@ -3,6 +3,7 @@ package com.znjz.class_lei.controller;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.common.entities.TblUser;
+import com.znjz.class_lei.common.errorHandler.BizException;
 import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.QueueServer;
 import com.znjz.class_lei.service.TblClassService;
@@ -46,7 +47,11 @@ public class TestContoller extends BaseController {
         return ResultBody.success();
     }
 
-
+    @GetMapping("/error")
+    public ResultBody error()
+    {
+        throw new BizException("test");
+    }
 
 
 }
