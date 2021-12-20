@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.TblUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> implements TblUserService {
 
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
     @Override
     public TblUser getByUsername(String username) {
         QueryWrapper<TblUser> wrapper=new QueryWrapper<>();
@@ -34,5 +38,13 @@ public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> impl
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //获取当前用户
         return getByUsername(username);
+    }
+
+    @Override
+    public boolean register(TblUser tblUser) {
+        //设置密码
+        String password=passwordEncoder.encode(tblUser.getPassword());
+        tblUser.setPassword(password);
+        return save(tblUser);
     }
 }
