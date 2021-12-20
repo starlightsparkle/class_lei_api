@@ -9,6 +9,7 @@ import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.mapper.TblClassMapper;
 import com.znjz.class_lei.service.TblClassService;
 import com.znjz.class_lei.service.TblUserService;
+import com.znjz.class_lei.utils.RabbitUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +28,17 @@ import java.util.Map;
 @Service
 public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> implements TblClassService {
     @Autowired
+    private RabbitUtils rabbitUtils;
+    @Autowired
     private TblClassMapper classMapper;
     @Autowired
     private TblUserService tblUserService;
 
     @Override
     public int insertClass(TblClass tblClass) {
-        return classMapper.insert(tblClass);
+        classMapper.insert(tblClass);
+        rabbitUtils.createOrBindQueue("app.class."+tblClass.getClassId(),"app.class."+tblClass.getClassId());
+        return 1;
     }
 
     @Override
@@ -43,8 +48,11 @@ public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> i
         query.eq("create_id", tblUserService.getCurrentUser().getUserId());
         query.orderByDesc("gmt_created");
         return list(query);
-
     }
+
+
+
+
 
 
 }

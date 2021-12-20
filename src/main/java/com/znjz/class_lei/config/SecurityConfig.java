@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             "/swagger-resources/configuration/ui",
             "/swagge‌​r-ui.html" //swaager的配置资源
+            ,"/sendMessage/**"
     };
     protected void configure(HttpSecurity http) throws Exception {
         //解决跨域问题，禁用csrf功能
