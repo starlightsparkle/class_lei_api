@@ -17,14 +17,14 @@ public class SenderController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    //发消息
-    @GetMapping("/sendMessage/{message}")
-    public void sendMessage(@PathVariable String message){
-        CorrelationData correlationData = new CorrelationData("1");
-        rabbitTemplate.convertAndSend("class_lei.exchange"
-                ,"text2"
-                ,message,correlationData);
-        log.info("发送消息内容：{}",message);
-
-    }
+//    //发消息
+//    @GetMapping("/sendMessage/{message}")
+//    public void sendMessage(@PathVariable String message){
+//        CorrelationData correlationData = new CorrelationData("1");
+//        rabbitTemplate.convertAndSend("class_lei.exchange"
+//                ,"text2"
+//                ,message,correlationData);
+//        log.info("发送消息内容：{}",message);
+//
+//    }
 }

@@ -15,12 +15,29 @@ public class Consumer {
         log.info("接受到的队列confirm.queue消息：{}",msg);
     }
 
-    @RabbitListener(queues = "app.class.common")
+    @RabbitListener(queues = "app.class.common2")
     public void receive(Message message){
         String msg = new String(message.getBody());
-        log.info("接受到的全局消息：{}",msg);
+        log.info("接受到的全局消息2：{}",msg);
+    }
+
+    @RabbitListener(queues = "app.class.common")
+    public void receivee(Message message){
+        String msg = new String(message.getBody());
+        log.info("接受到的全局消息1：{}",msg);
     }
 
 
+    @RabbitListener(queues = "app.user.7")
+    public void recei(Message message){
+        String msg = new String(message.getBody());
+        log.info("user7接受到消息：{}",msg);
+    }
+
+    @RabbitListener(queues = "app.user.9")
+    public void re(Message message){
+        String msg = new String(message.getBody());
+        log.info("user9接受到的消息：{}",msg);
+    }
 
 }

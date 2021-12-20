@@ -1,7 +1,6 @@
 package com.znjz.class_lei;
 
 import com.znjz.class_lei.utils.RabbitUtils;
-import com.znjz.class_lei.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Queue;
@@ -17,8 +16,6 @@ class ClassLeiApplicationTests {
     private RabbitAdmin rabbitAdmin;
     @Autowired
     private RabbitUtils rabbitUtils;
-    @Autowired
-    private RedisUtil redisUtil;
 
     @Test
     public void createOrBindQueue() {
@@ -30,9 +27,8 @@ class ClassLeiApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(redisUtil.hasKey("-8352245804906408389"));
+        rabbitUtils.deleteQueue("text1");
     }
-
 
 
 }

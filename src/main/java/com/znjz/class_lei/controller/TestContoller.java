@@ -8,10 +8,14 @@ import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.QueueServer;
 import com.znjz.class_lei.service.TblClassService;
 import com.znjz.class_lei.service.TblUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+@Api(tags = "测试用接口")
 @RestController
 @RequestMapping("/text")
 public class TestContoller extends BaseController {
@@ -39,13 +43,19 @@ public class TestContoller extends BaseController {
         return ResultBody.success();
     }
 
-
+    
+    @ApiOperation(value="发送课程消息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="rky",value="路由路径",dataType="string", paramType = "query",example="com.class.common"),
+            @ApiImplicitParam(name="msg",value="消息",dataType="string", paramType = "query"),
+    })
     @PostMapping("/send")
-    public ResultBody sendCommonMess(String msg,String rky)
+    public ResultBody sendMess(String msg,String rky)
     {
         queueServer.sendMessage(msg,rky);
         return ResultBody.success();
     }
+
 
     @GetMapping("/error")
     public ResultBody error()

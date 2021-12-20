@@ -2,6 +2,7 @@ package com.znjz.class_lei.config;
 
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Sets;
+import com.znjz.class_lei.common.entities.ResultBody;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -32,18 +33,9 @@ public class SwaggerAddtion implements ApiListingScannerPlugin {
                 .notes("username/password登录")
                 .consumes(Sets.newHashSet(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) // 接收参数格式
                 .produces(Sets.newHashSet(MediaType.APPLICATION_JSON_VALUE)) // 返回参数格式
-                .tags(Sets.newHashSet("登录"))
+                .tags(Sets.newHashSet("登录接口"))
                 .parameters(Arrays.asList(
-                        new ParameterBuilder()
-                                .description("用户名")
-                                .type(new TypeResolver().resolve(String.class))
-                                .name("username")
-                                .defaultValue("shijiajing")
-                                .parameterType("query")
-                                .parameterAccess("access")
-                                .required(true)
-                                .modelRef(new ModelRef("string"))
-                                .build(),
+
                         new ParameterBuilder()
                                 .description("密码")
                                 .type(new TypeResolver().resolve(String.class))
@@ -53,13 +45,21 @@ public class SwaggerAddtion implements ApiListingScannerPlugin {
                                 .parameterAccess("access")
                                 .required(true)
                                 .modelRef(new ModelRef("string"))
-                                .build()
+                                .build(),
+        new ParameterBuilder()
+                .description("用户名")
+                .type(new TypeResolver().resolve(String.class))
+                .name("username")
+                .defaultValue("shijiajing")
+                .parameterType("query")
+                .parameterAccess("access")
+                .required(true)
+                .modelRef(new ModelRef("string"))
+                .build()
                 ))
                 .responseMessages(Collections.singleton(
                         new ResponseMessageBuilder().code(200).message("请求成功")
-                                .responseModel(new ModelRef(
-                                        "com.znjz.")
-                                ).build()))
+                                .build()))
                 .build();
         ApiDescription loginApiDescription = new ApiDescription("login", "/login", "登录接口",
                 Arrays.asList(usernamePasswordOperation), false);
