@@ -4,12 +4,10 @@ package com.znjz.class_lei.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.znjz.class_lei.common.entities.ResultBody;
-import com.znjz.class_lei.common.entities.TblClass;
-import com.znjz.class_lei.common.entities.TblSelection;
-import com.znjz.class_lei.common.entities.TblSign;
+import com.znjz.class_lei.common.entities.*;
 import com.znjz.class_lei.common.errorHandler.BizException;
 import com.znjz.class_lei.mapper.TblSignMapper;
+import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.*;
 import com.znjz.class_lei.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,8 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
     private QueueServer queueServer;
     @Autowired
     private TblSelectionService tblSelectionService;
+    @Autowired
+    private TblUserMapper tblUserMapper;
     @Override
     public ResultBody startSign(TblSign tblSign, Long time) {
         tblSign.setUserId(tblUserService.getCurrentUser().getUserId());
@@ -104,5 +104,89 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
             save(tblSignnew);
             return true;
         }
+    }
+
+    @Override
+    public List<TblSign> signList(Long classId) {
+        Long userId=tblUserService.getCurrentUser().getUserId();
+        TblClass tblClass=tblClassService.getById(classId);
+        if(tblClass==null||!tblClass.getCreateId().equals(userId))
+        {
+            throw new BizException("不是课堂的创建者，无法查看发起的签到列表");
+        }
+        QueryWrapper<TblSign> wrapper=new QueryWrapper();
+        wrapper.eq("class_id",classId).eq("is_teacher",1);
+        List<TblSign> tblSignList=list(wrapper);
+        for (TblSign tblSign : tblSignList) {
+            if(redisUtil.hasKey(String.valueOf(tblSign.getClassSignId())))
+            {
+                tblSign.setStatus(1);
+            }
+            else
+            {
+                tblSign.setStatus(0);
+            }
+            String name=tblSign.getGmtCreated().getYear()+"年"+tblSign.getGmtCreated().getMonthValue()+
+                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMonthValue()+"分的签到";
+            tblSign.setSignName(name);
+        }
+        return tblSignList;
+    }
+
+    @Override
+    public List<TblUser> finishStudentlist(Long classSignId) {
+        QueryWrapper<TblSign> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("class_sign_id",classSignId).eq("is_teacher",1);
+        TblSign tblSign=getOne(wrapper1);
+        if(!tblSign.getUserId().equals(tblUserService.getCurrentUser().getUserId()))
+        {
+            throw new BizException("不是课堂的创建者，无法查看已完成签到表");
+        }
+        QueryWrapper<TblUser> wrapper=new QueryWrapper<>();
+        wrapper.inSql("user_id","select user_id  from tbl_sign where class_sign_id = '"+classSignId+"' and is_teacher = '0'");
+        return tblUserService.list(wrapper);
+    }
+
+    @Override
+    public List<TblUser> unfinishStudentlist(Long classSignId) {
+        QueryWrapper<TblSign> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("class_sign_id",classSignId).eq("is_teacher",1);
+        TblSign tblSign=getOne(wrapper1);
+        if(!tblSign.getUserId().equals(tblUserService.getCurrentUser().getUserId()))
+        {
+            throw new BizException("不是课堂的创建者，无法查看未完成签到表");
+        }
+        QueryWrapper<TblSign> wrapper=new QueryWrapper<>();
+        wrapper.eq("class_sign_id",classSignId);
+        List<TblSign> tblSignList=list(wrapper);
+        return tblUserMapper.unfinishUserList(classSignId,tblSignList.get(0).getClassId());
+    }
+
+    @Override
+    public List<TblSign> finishSignList(Long classId) {
+        QueryWrapper<TblSelection> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("class_id",classId).eq("user_id",tblUserService.getCurrentUser().getUserId());
+        TblSelection tblSelection=tblSelectionService.getOne(wrapper1);
+        if(tblSelection==null)
+        {
+            throw new BizException("未加入课堂，无法查看已完成签到列表");
+        }
+        QueryWrapper<TblSign> wrapper=new QueryWrapper<>();
+        wrapper.eq("class_id",classId).eq("user_id",tblUserService.getCurrentUser().getUserId());
+        return list(wrapper);
+    }
+
+    @Override
+    public List<TblSign> unfinishSignList(Long classId) {
+        QueryWrapper<TblSelection> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("class_id",classId).eq("user_id",tblUserService.getCurrentUser().getUserId());
+        TblSelection tblSelection=tblSelectionService.getOne(wrapper1);
+        if(tblSelection==null)
+        {
+            throw new BizException("未加入课堂，无法查看未签到列表");
+        }
+        QueryWrapper<TblSign> wrapper=new QueryWrapper<>();
+        wrapper.eq("is_teacher",1).eq("class_id",classId).notInSql("class_sign_id","select class_sign_id from tbl_sign where class_id = '"+classId+"' and user_id = '"+tblUserService.getCurrentUser().getUserId()+"'");
+        return list(wrapper);
     }
 }

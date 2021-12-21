@@ -3,6 +3,9 @@ package com.znjz.class_lei.service;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblSign;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.znjz.class_lei.common.entities.TblUser;
+
+import java.util.List;
 
 /**
  * <p>
@@ -44,4 +47,14 @@ public interface TblSignService extends IService<TblSign> {
      * @date 2021/12/21 15:22
      */
     boolean sign(Long classSignId,Integer signType,String locationXy);
+
+    List<TblSign> signList(Long classId);
+
+    List<TblUser> finishStudentlist(Long classSignId);
+
+    List<TblUser> unfinishStudentlist(Long classSignId);
+
+    List<TblSign> finishSignList(Long classId);
+
+    List<TblSign> unfinishSignList(Long classId);
 }

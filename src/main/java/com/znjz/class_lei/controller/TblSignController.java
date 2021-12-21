@@ -52,4 +52,32 @@ public class TblSignController extends BaseController {
     {
         return ResultBody.success(tblSignService.sign(classSignId,signType,locationXy));
     }
+
+    @ApiOperation("获取发起的签到列表")
+    @GetMapping("/list")
+    public ResultBody list(Long classId)
+    {
+        return ResultBody.success(tblSignService.signList(classId));
+    }
+
+    @GetMapping("/finishstudent")
+    public ResultBody finishStudent(Long classSignId)
+    {
+        return ResultBody.success(tblSignService.finishStudentlist(classSignId));
+    }
+    @GetMapping("/unfinishstudent")
+    public ResultBody unfinishStudent(Long classSignId)
+    {
+        return ResultBody.success(tblSignService.unfinishStudentlist(classSignId));
+    }
+    @GetMapping("/finishsign")
+    public ResultBody finishSign(Long classId)
+    {
+        return ResultBody.success(tblSignService.finishSignList(classId));
+    }
+    @GetMapping("/unfinishsign")
+    public ResultBody unfinishSign(Long classId)
+    {
+        return ResultBody.success(tblSignService.unfinishSignList(classId));
+    }
 }

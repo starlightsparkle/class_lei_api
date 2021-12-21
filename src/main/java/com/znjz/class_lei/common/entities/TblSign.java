@@ -1,10 +1,12 @@
 package com.znjz.class_lei.common.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 
 import com.znjz.class_lei.common.entities.BaseEntity;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -53,5 +55,13 @@ public class TblSign extends BaseEntity {
      * gps签到
      */
     private String locationXy;
+
+    //签到名字
+    @TableField(exist = false)
+    private String signName;
+
+    //签到状态
+    @TableField(exist = false)
+    private Integer status;
 
 }
