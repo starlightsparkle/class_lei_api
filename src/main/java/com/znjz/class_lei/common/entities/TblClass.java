@@ -39,6 +39,10 @@ public class TblClass extends BaseEntity {
      */
     private String className;
 
+    /**
+     * 课程内容
+     */
+    private String classContent;
 
 
 }

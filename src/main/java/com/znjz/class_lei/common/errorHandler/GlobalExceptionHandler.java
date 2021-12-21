@@ -4,6 +4,7 @@ package com.znjz.class_lei.common.errorHandler;
 
 import com.znjz.class_lei.common.entities.ResultBody;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.security.access.AccessDeniedException;
@@ -51,5 +52,13 @@ public class GlobalExceptionHandler {
 		log.error("无权限：----------------{}", e.getMessage());
 		return ResultBody.error("403", e.getMessage());
 	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(value = DuplicateKeyException.class)
+	public ResultBody handler(DuplicateKeyException e) {
+		log.error("重复：----------------{}", e.getMessage());
+		return ResultBody.error("-1", "重复加入课堂");
+	}
+
 
 }

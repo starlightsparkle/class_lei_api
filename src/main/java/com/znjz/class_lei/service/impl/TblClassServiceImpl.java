@@ -1,10 +1,11 @@
 package com.znjz.class_lei.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.common.entities.TblSelection;
 import com.znjz.class_lei.common.entities.TblUser;
@@ -16,9 +17,7 @@ import com.znjz.class_lei.utils.RabbitUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -61,12 +60,26 @@ public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> i
     }
 
     @Override
-    public List<TblClass> listWithCreateByMe() {
-        Map<String, Object> params = new HashMap<>();
+    public PageInfo listWithCreateByMe(int pageNum,int pageSize) {
+
         QueryWrapper<TblClass> query = Wrappers.query();
         query.eq("create_id", tblUserService.getCurrentUser().getUserId());
         query.orderByDesc("gmt_created");
-        return list(query);
+        PageHelper.startPage(pageNum , pageSize);
+        List<TblClass> tblClassList = classMapper.selectList(query);
+        //3.使用PageInfo包装查询后的结果,3是连续显示的条数
+        PageInfo pageInfo = new PageInfo(tblClassList);
+        return pageInfo;
+    }
+
+
+
+    @Override
+    public Object listClassesJoined(int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum , pageSize);//必须下面就是sql语句，否则分页失败
+        List<TblSelection> list = classMapper.selectClassWitchSelected(currentUser().getUserId());
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
     @Override

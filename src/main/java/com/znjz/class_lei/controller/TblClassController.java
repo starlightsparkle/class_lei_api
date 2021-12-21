@@ -4,10 +4,7 @@ package com.znjz.class_lei.controller;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.service.TblClassService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,13 +53,25 @@ public class TblClassController extends BaseController {
 
 
     @ApiOperation(value="获取我建的课程列表", notes="分页")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="pageNum",value="页号(从一开始)",dataType="Integer", paramType = "query",example="1"),
+            @ApiImplicitParam(name="pageSize",value="分页大小（一页有几个）",dataType="Integer", paramType = "query",example = "10"),
+    })
     @GetMapping("/listByMe")
-    public ResultBody listWithCreateByMe(){
-        return success(tblClassService.listWithCreateByMe());
+    public ResultBody listCreateByMe(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
+        return success(tblClassService.listWithCreateByMe(pageNum, pageSize));
     }
 
 
-
+    @ApiOperation(value="获取我选的课程列表", notes="分页")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="pageNum",value="页号(从一开始)",dataType="Integer", paramType = "query",example="1"),
+            @ApiImplicitParam(name="pageSize",value="分页大小（一页有几个）",dataType="Integer", paramType = "query",example = "10"),
+            })
+    @GetMapping("/list")
+    public ResultBody Classjoined(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
+        return success(tblClassService.listWithCreateByMe(pageNum,pageSize));
+    }
 
 
 

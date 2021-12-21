@@ -2,4 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.znjz.class_lei.mapper.TblClassMapper">
 
+
+
+    <select id="selectClassWitchSelected" resultType="com.znjz.class_lei.common.entities.TblSelection">
+        select a.*
+        from tbl_selection as a
+                 LEFT JOIN tbl_class as b
+                           on a.class_id=b.class_id
+        where a.user_id=#{user_id} ORDER BY  b.gmt_modified desc
+    </select>
+
 </mapper>

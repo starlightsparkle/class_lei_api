@@ -1,8 +1,6 @@
 package com.znjz.class_lei.controller;
 
 import com.znjz.class_lei.common.entities.ResultBody;
-import com.znjz.class_lei.common.entities.TblClass;
-import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.common.errorHandler.BizException;
 import com.znjz.class_lei.mapper.TblUserMapper;
 import com.znjz.class_lei.service.QueueServer;
@@ -36,6 +34,11 @@ public class TestContoller extends BaseController {
         return ResultBody.success();
     }
 
+
+    @ApiOperation(value="发送全局消息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="msg",value="消息",dataType="string", paramType = "query",example = "发送了全局消息，所有人都看到了吗？"),
+    })
     @PostMapping
     public ResultBody sendCommonMess(@RequestParam String msg)
     {
@@ -46,7 +49,7 @@ public class TestContoller extends BaseController {
     
     @ApiOperation(value="发送课程消息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="rky",value="路由路径",dataType="string", paramType = "query",example="com.class.common"),
+            @ApiImplicitParam(name="rky",value="路由路径",dataType="string", paramType = "query",example="7"),
             @ApiImplicitParam(name="msg",value="消息",dataType="string", paramType = "query"),
     })
     @PostMapping("/send")

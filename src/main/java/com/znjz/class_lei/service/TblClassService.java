@@ -3,8 +3,6 @@ package com.znjz.class_lei.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.znjz.class_lei.common.entities.TblClass;
 
-import java.util.List;
-
 
 /**
  * <p>
@@ -26,7 +24,14 @@ public interface TblClassService extends IService<TblClass> {
      * 获取当前用户创建的课程
      * @return
      */
-    public List<TblClass> listWithCreateByMe();
+    public Object listWithCreateByMe(int pageNum,int pageSize);
+
+
+    /**
+     * 获取当前用户加入的课程
+     * @return
+     */
+    public Object listClassesJoined(int page, int limit);
 
     /**
      * 选课
@@ -39,5 +44,8 @@ public interface TblClassService extends IService<TblClass> {
      * @param classId 课程id
      */
     public void dropClass(long classId);
+
+
+
 
 }

@@ -21,9 +21,9 @@ public class MinioConfig {
     @Value("${minio.secretKey}")
     private String secretKey;
 
-    @Bean
-    public MinioUtils creatMinioClient() {
-        return new MinioUtils(endpoint, bucketName, accessKey, secretKey);
-    }
+//    @Bean
+//    public MinioUtils creatMinioClient() {
+//        return new MinioUtils(endpoint, bucketName, accessKey, secretKey);
+//    }
 
 }

@@ -4,30 +4,20 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 
-import com.znjz.class_lei.common.entities.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author znjz
- * @since 2021-12-19
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class TblSelection extends BaseEntity {
+public  class TblSelection extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 选课id
      */
-    @TableId(value = "select_id", type = IdType.AUTO)
     private Long selectId;
 
     /**
@@ -39,6 +29,8 @@ public class TblSelection extends BaseEntity {
      * 课程id
      */
     private Long classId;
+
+
 
 
 }
