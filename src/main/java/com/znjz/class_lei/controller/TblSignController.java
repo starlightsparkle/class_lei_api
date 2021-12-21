@@ -44,4 +44,12 @@ public class TblSignController extends BaseController {
     {
         return ResultBody.success(tblSignService.endSign(classSignId));
     }
+
+    @ApiOperation("签到")
+    @PostMapping("/sign")
+    public ResultBody sign(@RequestParam("classSignId") Long classSignId,
+                           @RequestParam("signType") Integer signType,@RequestParam(value = "locationXy",required = false) String locationXy)
+    {
+        return ResultBody.success(tblSignService.sign(classSignId,signType,locationXy));
+    }
 }
