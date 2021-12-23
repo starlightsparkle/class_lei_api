@@ -38,6 +38,8 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
     private TblSelectionService tblSelectionService;
     @Autowired
     private TblUserMapper tblUserMapper;
+    @Autowired
+    private TblMessageService tblMessageService;
     @Override
     public ResultBody startSign(TblSign tblSign, Long time) {
         tblSign.setUserId(tblUserService.getCurrentUser().getUserId());
@@ -50,6 +52,14 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
             tblSign.setIsTeacher(1);
             save(tblSign);
             queueServer.sendMessage(String.valueOf(tblSign.getClassSignId()),String.valueOf(tblSign.getClassId()));
+            String messageTitle="签到通知";
+            String messageContent=tblClass.getClassName()+"的签到开始了！快去签到吧。";
+            TblMessage tblMessage=new TblMessage();
+            tblMessage.setMessageContent(messageContent)
+                    .setMessageReceive(tblClass.getClassId())
+                    .setMessageTitle(messageTitle)
+                    .setMessageType(0L);
+            tblMessageService.save(tblMessage);
             return ResultBody.success();
         }
         throw new BizException("不是当前班级用户，无法发起签到");
@@ -172,8 +182,22 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
             throw new BizException("未加入课堂，无法查看已完成签到列表");
         }
         QueryWrapper<TblSign> wrapper=new QueryWrapper<>();
-        wrapper.eq("class_id",classId).eq("user_id",tblUserService.getCurrentUser().getUserId());
-        return list(wrapper);
+        wrapper.eq("class_id",classId).eq("user_id",tblUserService.getCurrentUser().getUserId()).orderByDesc("gmt_created");;
+        List<TblSign> tblSignList= list(wrapper);
+        for (TblSign tblSign : tblSignList) {
+            if(redisUtil.hasKey(String.valueOf(tblSign.getClassSignId())))
+            {
+                tblSign.setStatus(1);
+            }
+            else
+            {
+                tblSign.setStatus(0);
+            }
+            String name=tblSign.getGmtCreated().getYear()+"年"+tblSign.getGmtCreated().getMonthValue()+
+                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMonthValue()+"分的签到";
+            tblSign.setSignName(name);
+        }
+        return tblSignList;
     }
 
     @Override
@@ -186,7 +210,21 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
             throw new BizException("未加入课堂，无法查看未签到列表");
         }
         QueryWrapper<TblSign> wrapper=new QueryWrapper<>();
-        wrapper.eq("is_teacher",1).eq("class_id",classId).notInSql("class_sign_id","select class_sign_id from tbl_sign where class_id = '"+classId+"' and user_id = '"+tblUserService.getCurrentUser().getUserId()+"'");
-        return list(wrapper);
+        wrapper.eq("is_teacher",1).eq("class_id",classId).notInSql("class_sign_id","select class_sign_id from tbl_sign where class_id = '"+classId+"' and user_id = '"+tblUserService.getCurrentUser().getUserId()+"'").orderByDesc("gmt_created");;
+        List<TblSign> tblSignList= list(wrapper);
+        for (TblSign tblSign : tblSignList) {
+            if(redisUtil.hasKey(String.valueOf(tblSign.getClassSignId())))
+            {
+                tblSign.setStatus(1);
+            }
+            else
+            {
+                tblSign.setStatus(0);
+            }
+            String name=tblSign.getGmtCreated().getYear()+"年"+tblSign.getGmtCreated().getMonthValue()+
+                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMonthValue()+"分的签到";
+            tblSign.setSignName(name);
+        }
+        return tblSignList;
     }
 }
