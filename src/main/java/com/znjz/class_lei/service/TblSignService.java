@@ -47,14 +47,55 @@ public interface TblSignService extends IService<TblSign> {
      * @date 2021/12/21 15:22
      */
     boolean sign(Long classSignId,Integer signType,String locationXy);
-
+    /**
+     *
+     * @description 获取发起签到的列表
+     * <br/>
+     * @param classId
+     * @return java.util.List<com.znjz.class_lei.common.entities.TblSign>
+     * @author sjj
+     * @date 2021/12/22 14:58
+     */
     List<TblSign> signList(Long classId);
-
+    /**
+     *
+     * @description 教师获取已完成签到的学生名单
+     * <br/>
+     * @param classSignId
+     * @return java.util.List<com.znjz.class_lei.common.entities.TblUser>
+     * @author sjj
+     * @date 2021/12/22 14:58
+     */
     List<TblUser> finishStudentlist(Long classSignId);
-
+    /**
+     *
+     * @description 教师获取未完成签到的学生名单
+     * <br/>
+     * @param classSignId
+     * @return java.util.List<com.znjz.class_lei.common.entities.TblUser>
+     * @author sjj
+     * @date 2021/12/22 14:58
+     */
     List<TblUser> unfinishStudentlist(Long classSignId);
+    /**
+     *
+     * @description 学生获取完成的签到列表
+     * <br/>
+     * @param classId
+     * @return java.util.List<com.znjz.class_lei.common.entities.TblSign>
+     * @author sjj
+     * @date 2021/12/22 14:59
+     */
 
     List<TblSign> finishSignList(Long classId);
-
+    /**
+     *
+     * @description 学生获取未完成签到的列表
+     * <br/>
+     * @param classId
+     * @return java.util.List<com.znjz.class_lei.common.entities.TblSign>
+     * @author sjj
+     * @date 2021/12/22 14:59
+     */
     List<TblSign> unfinishSignList(Long classId);
 }

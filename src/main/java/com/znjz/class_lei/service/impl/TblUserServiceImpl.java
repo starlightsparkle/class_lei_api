@@ -49,8 +49,8 @@ public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> impl
         String password=passwordEncoder.encode(tblUser.getPassword());
         tblUser.setPassword(password);
         save(tblUser);
-        String queueName="app.user."+String.valueOf(tblUser.getUserId());
-        rabbitUtils.createOrBindQueue(queueName,"app.class.common");
+        String queueName=String.valueOf(tblUser.getUserId());
+        rabbitUtils.createOrBindQueue(queueName,"common");
         return true;
     }
 }

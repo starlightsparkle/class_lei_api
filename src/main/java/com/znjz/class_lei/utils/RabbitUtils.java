@@ -23,6 +23,7 @@ public class RabbitUtils {
      * @param rkey app.class.cid;
      */
     public void createOrBindQueue(String queueName,String rkey) {
+        rabbitAdmin.declareQueue(new Queue(UserKEY+queueName,true));
         rabbitAdmin.declareBinding(new Binding(UserKEY+queueName, Binding.DestinationType.QUEUE,"class_lei.exchange",
                 RKEY+rkey,null));
     }
