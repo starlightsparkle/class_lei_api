@@ -21,7 +21,7 @@ public class QueueServiceImpl implements QueueServer {
     public void sendMessage(String message, String rk) {
         rabbitTemplate.convertAndSend("class_lei.exchange",RKEY+rk,message);
     }
-
+    @Override
     public void sendCommonMessage(String message) {
         sendMessage(message,"app.class.common");
     }

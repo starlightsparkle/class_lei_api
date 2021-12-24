@@ -51,7 +51,8 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
             tblSign.setClassSignId(classSignId);
             tblSign.setIsTeacher(1);
             save(tblSign);
-            queueServer.sendMessage(String.valueOf(tblSign.getClassSignId()),String.valueOf(tblSign.getClassId()));
+            String msg=tblSign.getSignType()+","+String.valueOf(tblSign.getClassSignId());
+            queueServer.sendMessage(msg,String.valueOf(tblSign.getClassId()));
             String messageTitle="签到通知";
             String messageContent=tblClass.getClassName()+"的签到开始了！快去签到吧。";
             TblMessage tblMessage=new TblMessage();
