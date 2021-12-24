@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.common.entities.TblSelection;
 import com.znjz.class_lei.common.entities.TblUser;
+import com.znjz.class_lei.common.errorHandler.BizException;
 import com.znjz.class_lei.mapper.TblClassMapper;
 import com.znjz.class_lei.mapper.TblSelectionMapper;
 import com.znjz.class_lei.service.TblClassService;
@@ -69,6 +70,11 @@ public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> i
         List<TblClass> tblClassList = classMapper.selectList(query);
         //3.使用PageInfo包装查询后的结果,3是连续显示的条数
         PageInfo pageInfo = new PageInfo(tblClassList);
+        int pages=pageInfo.getPages();
+        if(pageNum>pages)
+        {
+            throw new BizException("没有更多内容了！");
+        }
         return pageInfo;
     }
 
@@ -79,6 +85,11 @@ public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> i
         PageHelper.startPage(pageNum , pageSize);//必须下面就是sql语句，否则分页失败
         List<TblSelection> list = classMapper.selectClassWitchSelected(currentUser().getUserId());
         PageInfo pageInfo = new PageInfo(list);
+        int pages=pageInfo.getPages();
+        if(pageNum>pages)
+        {
+            throw new BizException("没有更多内容了！");
+        }
         return pageInfo;
     }
 

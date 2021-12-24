@@ -98,4 +98,16 @@ public interface TblSignService extends IService<TblSign> {
      * @date 2021/12/22 14:59
      */
     List<TblSign> unfinishSignList(Long classId);
+    /**
+     *
+     * @description 教师修改学生的签到状态
+     * <br/>
+     * @param classSignId
+     * @param userId
+     * @param status
+     * @return boolean
+     * @author sjj
+     * @date 2021/12/24 21:43
+     */
+    boolean exchangeSign(Long classSignId,Long userId,int status);
 }

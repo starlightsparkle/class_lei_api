@@ -83,4 +83,10 @@ public class TblSignController extends BaseController {
     {
         return ResultBody.success(tblSignService.unfinishSignList(classId));
     }
+    @ApiOperation("更改签到状态")
+    @PostMapping("/exchange")
+    public ResultBody exchange(Long classSignId,Long userId,int status)
+    {
+        return ResultBody.success(tblSignService.exchangeSign(classSignId,userId,status));
+    }
 }

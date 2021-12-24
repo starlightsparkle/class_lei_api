@@ -228,4 +228,57 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
         }
         return tblSignList;
     }
+
+    @Override
+    public boolean exchangeSign(Long classSignId, Long userId,int status) {
+        Long currentUserId=tblUserService.getCurrentUser().getUserId();
+        QueryWrapper<TblSign> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("class_sign_id",classSignId).eq("is_teacher",1);
+        TblSign tblSign=getOne(wrapper1);
+        if(tblSign==null||!tblSign.getUserId().equals(currentUserId))
+        {
+            throw new BizException("不是当前签到的发起人，不允许修改签到状态");
+        }
+        QueryWrapper<TblSign> wrapper=new QueryWrapper<>();
+        wrapper.eq("class_sign_id",classSignId).eq("user_id",userId);
+        TblSign tblSign1=getOne(wrapper);
+        if(status==0)
+        {
+            if(tblSign1==null)
+            {
+                throw new BizException("该学生未签到，无法将状态改成未签到状态！");
+            }
+            else
+            {
+                removeById(tblSign1.getSignId());
+                return true;
+            }
+        }
+        else
+        {
+            QueryWrapper<TblSelection> wrapper2=new QueryWrapper<>();
+            wrapper2.eq("class_id",tblSign.getClassId()).eq("user_id",userId);
+            TblSelection tblSelection=tblSelectionService.getOne(wrapper2);
+            if(tblSelection==null)
+            {
+                throw new BizException("该学生未选课，无法更改签到状态！");
+            }
+            else if(tblSign1!=null)
+            {
+                throw new BizException("该学生已经签到，无需签到！");
+            }
+            else
+            {
+                TblSign tblSign2=new TblSign();
+                tblSign2.setClassSignId(classSignId)
+                        .setClassId(tblSign.getClassId())
+                        .setSignType(tblSign.getSignType())
+                        .setLocationXy(tblSign.getLocationXy())
+                        .setUserId(userId);
+                save(tblSign2);
+                return true;
+            }
+        }
+
+    }
 }
