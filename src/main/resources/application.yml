@@ -40,7 +40,7 @@ sjj:
     secret: ji8n3439n439n43ld9ne9343fdfer49h
 
 pagehelper:
-  auto-dialect: mysql
+  auto-dialect: true
   reasonable: true
   support-methods-arguments: true
   page-size-zero: true

@@ -70,7 +70,7 @@ public class TblClassController extends BaseController {
             })
     @GetMapping("/list")
     public ResultBody Classjoined(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
-        return success(tblClassService.listWithCreateByMe(pageNum,pageSize));
+        return success(tblClassService.listClassesJoined(pageNum,pageSize));
     }
 
 
