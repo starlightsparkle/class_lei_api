@@ -4,6 +4,7 @@ import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblSign;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.znjz.class_lei.common.entities.TblUser;
+import com.znjz.class_lei.common.entities.TblUserSign;
 
 import java.util.List;
 
@@ -66,7 +67,7 @@ public interface TblSignService extends IService<TblSign> {
      * @author sjj
      * @date 2021/12/22 14:58
      */
-    List<TblUser> finishStudentlist(Long classSignId);
+    List<TblUserSign> finishStudentlist(Long classSignId);
     /**
      *
      * @description 教师获取未完成签到的学生名单

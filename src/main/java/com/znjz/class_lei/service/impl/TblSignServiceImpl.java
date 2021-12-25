@@ -8,6 +8,7 @@ import com.znjz.class_lei.common.entities.*;
 import com.znjz.class_lei.common.errorHandler.BizException;
 import com.znjz.class_lei.mapper.TblSignMapper;
 import com.znjz.class_lei.mapper.TblUserMapper;
+import com.znjz.class_lei.mapper.TblUserSignMapper;
 import com.znjz.class_lei.service.*;
 import com.znjz.class_lei.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
     private TblUserMapper tblUserMapper;
     @Autowired
     private TblMessageService tblMessageService;
+    @Autowired
+    private TblUserSignMapper tblUserSignMapper;
     @Override
     public ResultBody startSign(TblSign tblSign, Long time) {
         tblSign.setUserId(tblUserService.getCurrentUser().getUserId());
@@ -145,7 +148,7 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
     }
 
     @Override
-    public List<TblUser> finishStudentlist(Long classSignId) {
+    public List<TblUserSign> finishStudentlist(Long classSignId) {
         QueryWrapper<TblSign> wrapper1=new QueryWrapper<>();
         wrapper1.eq("class_sign_id",classSignId).eq("is_teacher",1);
         TblSign tblSign=getOne(wrapper1);
@@ -153,9 +156,10 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
         {
             throw new BizException("不是课堂的创建者，无法查看已完成签到表");
         }
-        QueryWrapper<TblUser> wrapper=new QueryWrapper<>();
-        wrapper.inSql("user_id","select user_id  from tbl_sign where class_sign_id = '"+classSignId+"' and is_teacher = '0'");
-        return tblUserService.list(wrapper);
+//        QueryWrapper<TblUser> wrapper=new QueryWrapper<>();
+//        wrapper.inSql("user_id","select user_id  from tbl_sign where class_sign_id = '"+classSignId+"' and is_teacher = '0'");
+//        return tblUserService.list(wrapper);
+        return tblUserSignMapper.getFinishStudent(classSignId);
     }
 
     @Override
