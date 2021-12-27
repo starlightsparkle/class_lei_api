@@ -4,8 +4,8 @@
 
 
 
-    <select id="selectClassWitchSelected" resultType="com.znjz.class_lei.common.entities.TblSelection">
-        select a.*
+    <select id="selectClassWitchSelected" resultType="com.znjz.class_lei.common.entities.Vo.classVo">
+        select b.class_name,b.class_content,a.*
         from tbl_selection as a
                  LEFT JOIN tbl_class as b
                            on a.class_id=b.class_id

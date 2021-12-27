@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.common.entities.TblSelection;
 import com.znjz.class_lei.common.entities.TblUser;
+import com.znjz.class_lei.common.entities.Vo.classVo;
 import com.znjz.class_lei.common.errorHandler.BizException;
 import com.znjz.class_lei.mapper.TblClassMapper;
 import com.znjz.class_lei.mapper.TblSelectionMapper;
@@ -83,7 +84,7 @@ public class TblClassServiceImpl extends ServiceImpl<TblClassMapper, TblClass> i
     @Override
     public Object listClassesJoined(int pageNum,int pageSize) {
         PageHelper.startPage(pageNum , pageSize);//必须下面就是sql语句，否则分页失败
-        List<TblSelection> list = classMapper.selectClassWitchSelected(currentUser().getUserId());
+        List<classVo> list = classMapper.selectClassWitchSelected(currentUser().getUserId());
         PageInfo pageInfo = new PageInfo(list);
         int pages=pageInfo.getPages();
         if(pageNum>pages)

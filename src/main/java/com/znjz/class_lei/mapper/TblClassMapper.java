@@ -4,6 +4,7 @@ package com.znjz.class_lei.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.znjz.class_lei.common.entities.TblClass;
 import com.znjz.class_lei.common.entities.TblSelection;
+import com.znjz.class_lei.common.entities.Vo.classVo;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -19,6 +20,6 @@ import java.util.List;
 
 public interface TblClassMapper extends BaseMapper<TblClass> {
 
-    public List<TblSelection> selectClassWitchSelected(long user_id);
+    public List<classVo> selectClassWitchSelected(long user_id);
 
 }
