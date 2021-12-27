@@ -124,12 +124,12 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
     public List<TblSign> signList(Long classId) {
         Long userId=tblUserService.getCurrentUser().getUserId();
         TblClass tblClass=tblClassService.getById(classId);
-        if(tblClass==null||!tblClass.getCreateId().equals(userId))
-        {
-            throw new BizException("不是课堂的创建者，无法查看发起的签到列表");
-        }
+//        if(tblClass==null||!tblClass.getCreateId().equals(userId))
+//        {
+//            throw new BizException("不是课堂的创建者，无法查看发起的签到列表");
+//        }
         QueryWrapper<TblSign> wrapper=new QueryWrapper();
-        wrapper.eq("class_id",classId).eq("is_teacher",1);
+        wrapper.eq("class_id",classId).eq("is_teacher",1).orderByDesc("gmt_created");
         List<TblSign> tblSignList=list(wrapper);
         for (TblSign tblSign : tblSignList) {
             if(redisUtil.hasKey(String.valueOf(tblSign.getClassSignId())))
@@ -180,7 +180,7 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
     @Override
     public List<TblSign> finishSignList(Long classId) {
         QueryWrapper<TblSelection> wrapper1=new QueryWrapper<>();
-        wrapper1.eq("class_id",classId).eq("user_id",tblUserService.getCurrentUser().getUserId());
+        wrapper1.eq("class_id",classId).eq("user_id",tblUserService.getCurrentUser().getUserId()).orderByDesc("gmt_created");
         TblSelection tblSelection=tblSelectionService.getOne(wrapper1);
         if(tblSelection==null)
         {

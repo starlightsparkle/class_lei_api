@@ -10,6 +10,6 @@
                 LEFT JOIN tbl_user AS b ON a.user_id = b.user_id
         WHERE
             a.class_sign_id = #{classSignId}
-          AND a.is_teacher = '0'
+        ORDER BY a.sign_id
     </select>
 </mapper>
