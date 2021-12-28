@@ -12,5 +12,6 @@ public class TblUserSign implements Serializable {
     private static final long serialVersionUID = 1L;
     private String locationXy;
     private String username;
+    private Long  userId;
 
 }
