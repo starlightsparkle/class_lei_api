@@ -34,6 +34,24 @@ public class TblUserController extends BaseController {
         return ResultBody.success(tblUserService.register(tblUser));
     }
 
+    //上转一个图片（base64）到ai服务器中
+    @ApiOperation(value="人脸注册")
+    @PostMapping("/faceRegister")
+    public ResultBody registerFace()
+    {
+
+        return ResultBody.success();
+    }
+    //
+    @ApiOperation(value="是否已经人脸注册")
+    @GetMapping("/haveFaceRegister")
+    public ResultBody isRegisteredFace()
+    {
+
+        return ResultBody.success(1);
+    }
+
+
     @ApiOperation(value="获取当前用户信息")
     @GetMapping("/current")
     public ResultBody getCurrent()
