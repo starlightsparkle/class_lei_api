@@ -4,7 +4,8 @@
     <select id="getFinishStudent" resultType="com.znjz.class_lei.common.entities.TblUserSign">
         SELECT
             a.location_xy,
-            b.username
+            b.username,
+            b.user_id
         FROM
             tbl_sign AS a
                 LEFT JOIN tbl_user AS b ON a.user_id = b.user_id

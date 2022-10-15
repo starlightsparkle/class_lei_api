@@ -79,6 +79,10 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
         {
             throw new BizException("不是当前班级用户，无法结束签到");
         }
+        else if (!redisUtil.hasKey(String.valueOf(classSignId)))
+        {
+            throw new BizException("签到已经结束，无法停止");
+        }
         else
         {
             redisUtil.del(String.valueOf(classSignId));
@@ -141,7 +145,7 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
                 tblSign.setStatus(0);
             }
             String name=tblSign.getGmtCreated().getYear()+"年"+tblSign.getGmtCreated().getMonthValue()+
-                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMonthValue()+"分的签到";
+                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMinute()+"分的签到";
             tblSign.setSignName(name);
         }
         return tblSignList;
@@ -199,7 +203,7 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
                 tblSign.setStatus(0);
             }
             String name=tblSign.getGmtCreated().getYear()+"年"+tblSign.getGmtCreated().getMonthValue()+
-                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMonthValue()+"分的签到";
+                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMinute()+"分的签到";
             tblSign.setSignName(name);
         }
         return tblSignList;
@@ -227,7 +231,7 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
                 tblSign.setStatus(0);
             }
             String name=tblSign.getGmtCreated().getYear()+"年"+tblSign.getGmtCreated().getMonthValue()+
-                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMonthValue()+"分的签到";
+                    "月"+tblSign.getGmtCreated().getDayOfMonth()+"日"+tblSign.getGmtCreated().getHour()+"点"+tblSign.getGmtCreated().getMinute()+"分的签到";
             tblSign.setSignName(name);
         }
         return tblSignList;
