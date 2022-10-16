@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -34,12 +35,25 @@ public class TblUserController extends BaseController {
         return ResultBody.success(tblUserService.register(tblUser));
     }
 
-    //上转一个图片（base64）到ai服务器中
+    //上转一张图片（base64）到ai服务器中
     @ApiOperation(value="人脸注册")
     @PostMapping("/faceRegister")
-    public ResultBody registerFace()
+    public ResultBody registerFace(@RequestParam(value = "file") MultipartFile file)
     {
+        if (file.isEmpty()) {
+            System.out.println("文件为空");
+        }
+        // BMP、JPG、JPEG、PNG、GIF
+        String fileName = file.getOriginalFilename();  // 文件名
 
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+        // 验证上传的文件是否图片
+        if (!".bmp".equalsIgnoreCase(suffixName) && !".jpg".equalsIgnoreCase(suffixName)
+                && !".jpeg".equalsIgnoreCase(suffixName)
+                && !".png".equalsIgnoreCase(suffixName)
+                && !".gif".equalsIgnoreCase(suffixName)) {
+            return error("error");
+        }
         return ResultBody.success();
     }
     //
