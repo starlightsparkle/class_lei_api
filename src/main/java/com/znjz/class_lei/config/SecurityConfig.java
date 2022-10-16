@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/text/**"
 
     };
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         //解决跨域问题，禁用csrf功能
         http.cors().and().csrf().disable()
@@ -83,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 禁用session
                 .and()
-                .sessionManagement()
+                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 // 配置拦截规则

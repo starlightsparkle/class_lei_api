@@ -19,7 +19,7 @@ class ClassLeiApplicationTests {
 
     @Test
     public void createOrBindQueue() {
-        rabbitAdmin.declareQueue(new Queue("app.class.common",true));
+        rabbitAdmin.declareQueue(new Queue("app.class.common2",true));
         rabbitAdmin.declareBinding(new Binding("app.class.common", Binding.DestinationType.QUEUE,"class_lei.exchange",
                 "app.class.common",null));
     }
