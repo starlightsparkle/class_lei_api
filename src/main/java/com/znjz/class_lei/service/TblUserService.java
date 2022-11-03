@@ -1,8 +1,14 @@
 package com.znjz.class_lei.service;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.znjz.class_lei.common.entities.TblUser;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /**
  * <p>
@@ -13,6 +19,15 @@ import com.znjz.class_lei.common.entities.TblUser;
  * @since 2021-12-18
  */
 public interface TblUserService extends IService<TblUser> {
+
+    boolean isRegisteredFace();
+
+    HttpResponse<String> registerFace(MultipartFile file) throws UnirestException;
+
+
+
+
+
     /**
      *
      * @description 根据用户名获取用户详细信息

@@ -1,10 +1,12 @@
 package com.znjz.class_lei.service;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblSign;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.common.entities.TblUserSign;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,6 +50,8 @@ public interface TblSignService extends IService<TblSign> {
      * @date 2021/12/21 15:22
      */
     boolean sign(Long classSignId,Integer signType,String locationXy);
+
+    boolean faceSign(Long classSignId, Integer signType, MultipartFile file) throws UnirestException;
     /**
      *
      * @description 获取发起签到的列表

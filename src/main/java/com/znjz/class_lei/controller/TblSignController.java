@@ -1,6 +1,7 @@
 package com.znjz.class_lei.controller;
 
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblSign;
 import com.znjz.class_lei.service.TblSignService;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -51,6 +53,17 @@ public class TblSignController extends BaseController {
                            @RequestParam("signType") Integer signType,@RequestParam(value = "locationXy",required = false) String locationXy)
     {
         return ResultBody.success(tblSignService.sign(classSignId,signType,locationXy));
+    }
+
+    @ApiOperation("人脸签到")
+    @PostMapping("/faceSign")
+    public ResultBody sign(
+            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam("classSignId") Long classSignId,
+            @RequestParam("signType") Integer signType) throws UnirestException {
+        System.out.println(file.getName()+" "+classSignId+" "+signType);
+        tblSignService.faceSign(classSignId,signType,file);
+        return ResultBody.success();
     }
 
     @ApiOperation("获取发起的签到列表")

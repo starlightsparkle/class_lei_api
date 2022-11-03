@@ -1,6 +1,7 @@
 package com.znjz.class_lei.controller;
 
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblUser;
 import com.znjz.class_lei.service.TblUserService;
@@ -38,14 +39,13 @@ public class TblUserController extends BaseController {
     //上转一张图片（base64）到ai服务器中
     @ApiOperation(value="人脸注册")
     @PostMapping("/faceRegister")
-    public ResultBody registerFace(@RequestParam(value = "file") MultipartFile file)
-    {
+    public ResultBody registerFace(@RequestParam(value = "file") MultipartFile file) throws UnirestException {
         if (file.isEmpty()) {
             System.out.println("文件为空");
         }
         // BMP、JPG、JPEG、PNG、GIF
         String fileName = file.getOriginalFilename();  // 文件名
-
+        System.out.println(fileName);
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         // 验证上传的文件是否图片
         if (!".bmp".equalsIgnoreCase(suffixName) && !".jpg".equalsIgnoreCase(suffixName)
@@ -54,16 +54,18 @@ public class TblUserController extends BaseController {
                 && !".gif".equalsIgnoreCase(suffixName)) {
             return error("error");
         }
-        return ResultBody.success();
+        return ResultBody.success(tblUserService.registerFace(file).getBody());
     }
     //
+
     @ApiOperation(value="是否已经人脸注册")
     @GetMapping("/haveFaceRegister")
     public ResultBody isRegisteredFace()
     {
-
-        return ResultBody.success(1);
+        return ResultBody.success(0);
     }
+
+
 
 
     @ApiOperation(value="获取当前用户信息")

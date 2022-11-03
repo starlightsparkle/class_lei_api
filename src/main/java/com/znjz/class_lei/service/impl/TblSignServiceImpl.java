@@ -4,6 +4,9 @@ package com.znjz.class_lei.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.znjz.class_lei.common.entities.*;
 import com.znjz.class_lei.common.errorHandler.BizException;
 import com.znjz.class_lei.mapper.TblSignMapper;
@@ -12,8 +15,12 @@ import com.znjz.class_lei.mapper.TblUserSignMapper;
 import com.znjz.class_lei.service.*;
 import com.znjz.class_lei.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -122,6 +129,45 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
             save(tblSignnew);
             return true;
         }
+    }
+
+    @Override
+    public boolean faceSign(Long classSignId, Integer signType, MultipartFile file) throws UnirestException {
+        File toFile = transferToFile(file);
+        HttpResponse<String> response = request(toFile);
+        Long cur = tblUserService.getCurrentUser().getUserId();
+
+        sign(classSignId,signType,"");
+        return true;
+    }
+    //请求注册
+    public HttpResponse<String> request(File file) throws UnirestException {
+        Unirest.setTimeouts(0, 0);
+        HttpResponse response = Unirest.post("http://114.132.240.69:5000/take_in")
+                .header("User-Agent", "apifox/1.0.0 (https://www.apifox.cn)")
+                .field("file", file)
+                .asString();
+        return response;
+    }
+
+
+
+
+
+
+    public File transferToFile(MultipartFile multipartFile) {
+//        选择用缓冲区来实现这个转换即使用java 创建的临时文件 使用 MultipartFile.transferto()方法 。
+        File file = null;
+        try {
+            String originalFilename = multipartFile.getOriginalFilename();
+            String[] filename = originalFilename.split("\\.");
+            file=File.createTempFile(filename[0], filename[1]);
+            multipartFile.transferTo(file);
+            file.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
     @Override
