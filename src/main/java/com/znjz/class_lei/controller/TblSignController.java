@@ -1,6 +1,7 @@
 package com.znjz.class_lei.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblSign;
@@ -60,9 +61,17 @@ public class TblSignController extends BaseController {
     public ResultBody sign(
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam("classSignId") Long classSignId,
-            @RequestParam("signType") Integer signType) throws UnirestException {
+            @RequestParam("signType") Integer signType) throws UnirestException, JsonProcessingException {
         System.out.println(file.getName()+" "+classSignId+" "+signType);
         tblSignService.faceSign(classSignId,signType,file);
+        return ResultBody.success();
+    }
+
+    @ApiOperation("人脸签到text")
+    @PostMapping("/faceSigntext")
+    public ResultBody signTEXT(
+            @RequestParam(value = "file") MultipartFile file) throws UnirestException {
+        tblSignService.text(file);
         return ResultBody.success();
     }
 

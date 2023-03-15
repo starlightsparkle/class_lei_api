@@ -1,5 +1,6 @@
 package com.znjz.class_lei.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.znjz.class_lei.common.entities.ResultBody;
 import com.znjz.class_lei.common.entities.TblSign;
@@ -51,7 +52,9 @@ public interface TblSignService extends IService<TblSign> {
      */
     boolean sign(Long classSignId,Integer signType,String locationXy);
 
-    boolean faceSign(Long classSignId, Integer signType, MultipartFile file) throws UnirestException;
+    boolean faceSign(Long classSignId, Integer signType, MultipartFile file) throws UnirestException, JsonProcessingException;
+
+    void text(MultipartFile file) throws UnirestException;
     /**
      *
      * @description 获取发起签到的列表

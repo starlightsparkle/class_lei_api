@@ -4,6 +4,8 @@ package com.znjz.class_lei.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -132,18 +135,46 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
     }
 
     @Override
-    public boolean faceSign(Long classSignId, Integer signType, MultipartFile file) throws UnirestException {
+    public boolean faceSign(Long classSignId, Integer signType, MultipartFile file) throws UnirestException, JsonProcessingException {
         File toFile = transferToFile(file);
         HttpResponse<String> response = request(toFile);
         Long cur = tblUserService.getCurrentUser().getUserId();
 
+        ObjectMapper objMapper=new ObjectMapper();//jackson提供工具类
+        String strBody=null;
+        System.out.println("ai结果为："+response.getBody());
+        Res respons=null;
+        //3.把strBody转化成java类
+            respons=objMapper.readValue(response.getBody(), Res.class);
+
+        Long value=-1L;
+        System.out.println(respons);
+        try{
+             value = Long.valueOf(respons.getUrls());
+        }catch (Exception e){
+            throw new UnirestException("未知注册的人脸");
+        }
+        if (value!=cur)
+            throw new UnirestException("是id为的"+value+"未知注册的人脸");
+        System.out.println("ai识别为 "+value);
         sign(classSignId,signType,"");
         return true;
     }
+
+
+
+    @Override
+    public void text(MultipartFile file) throws UnirestException {
+        File toFile = transferToFile(file);
+        HttpResponse<String> response = request(toFile);
+        System.out.println(response.getBody());
+
+    }
+
     //请求注册
     public HttpResponse<String> request(File file) throws UnirestException {
         Unirest.setTimeouts(0, 0);
-        HttpResponse response = Unirest.post("http://114.132.240.69:5000/take_in")
+        HttpResponse response = Unirest.post("http://139.9.89.11:5000/a")
                 .header("User-Agent", "apifox/1.0.0 (https://www.apifox.cn)")
                 .field("file", file)
                 .asString();
@@ -196,6 +227,9 @@ public class TblSignServiceImpl extends ServiceImpl<TblSignMapper, TblSign> impl
         }
         return tblSignList;
     }
+
+
+
 
     @Override
     public List<TblUserSign> finishStudentlist(Long classSignId) {

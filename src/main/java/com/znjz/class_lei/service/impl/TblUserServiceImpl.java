@@ -55,9 +55,11 @@ public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> impl
 
     @Override
     public HttpResponse<String> registerFace(MultipartFile file) throws UnirestException {
+
         File toFile = transferToFile(file);
         return request(toFile);
     }
+
     public File transferToFile(MultipartFile multipartFile) {
 //        选择用缓冲区来实现这个转换即使用java 创建的临时文件 使用 MultipartFile.transferto()方法 。
         File file = null;
@@ -76,7 +78,7 @@ public class TblUserServiceImpl extends ServiceImpl<TblUserMapper, TblUser> impl
     //请求注册
     public HttpResponse<String> request(File file) throws UnirestException {
         Unirest.setTimeouts(0, 0);
-        HttpResponse response = Unirest.post("http://114.132.240.69:5000/register")
+        HttpResponse response = Unirest.post("http://139.9.89.11:5000/register")
                 .header("User-Agent", "apifox/1.0.0 (https://www.apifox.cn)")
                 .field("file", file)
                 .field("num", 1)

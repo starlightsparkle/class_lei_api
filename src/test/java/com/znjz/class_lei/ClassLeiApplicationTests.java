@@ -1,5 +1,7 @@
 package com.znjz.class_lei;
 
+import com.znjz.class_lei.common.entities.TblSelection;
+import com.znjz.class_lei.service.TblSignService;
 import com.znjz.class_lei.utils.RabbitUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.Binding;
@@ -16,6 +18,8 @@ class ClassLeiApplicationTests {
     private RabbitAdmin rabbitAdmin;
     @Autowired
     private RabbitUtils rabbitUtils;
+    @Autowired
+    private TblSignService tblSignService;
 
     @Test
     public void createOrBindQueue() {
@@ -23,7 +27,11 @@ class ClassLeiApplicationTests {
         rabbitAdmin.declareBinding(new Binding("app.class.common", Binding.DestinationType.QUEUE,"class_lei.exchange",
                 "app.class.common",null));
     }
+    @Test
+    public void AI() {
 
+
+    }
 
     @Test
     void contextLoads() {

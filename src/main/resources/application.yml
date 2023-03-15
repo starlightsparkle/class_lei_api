@@ -1,12 +1,12 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.108.142.80:3306/class_lei?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8
+    url: jdbc:mysql://139.9.89.11:3306/class_lei?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8
     username: class_lei
-    password: 123456
+    password: lei123456
   redis:
     database: 0
-    host: 39.108.142.80         # Redis?????
+    host: 127.0.0.1       # Redis?????
     port: 6379              # Redis???????
     password:               # Redis?????????????
     pool:
@@ -15,7 +15,7 @@ spring:
       max-wait: -1          # ???????????????????????
       min-idle: 0           # ???????????
   rabbitmq:
-    host: 39.108.142.80
+    host: 139.9.89.11
     port: 5672
     username: guest
     password: guest
@@ -24,7 +24,7 @@ spring:
 
 
 minio:
-  endpoint: http://39.108.142.80:9000 #MinIO??????
+  endpoint: http://139.9.89.11:9000 #MinIO??????
   bucketName: taskmanagement #?????
   accessKey: minioAlan #???key
   secretKey: miniokillccc #?????
